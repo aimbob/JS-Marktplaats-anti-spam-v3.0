@@ -1,0 +1,152 @@
+<html>
+
+<head>
+	<script type="text/javascript" src="js/config.js"></script>
+	<script type="text/javascript" src="js/resources/angular-1.6.4.min.js"></script>
+	<script type="text/javascript" src="js/resources/angular-sanitize-1.6.4.min.js"></script>
+	<script type="text/javascript" src="js/sidebar.js"></script>
+
+	<link rel="stylesheet" href="css/sidebar.css" />
+</head>
+
+<body ng-app="mpas" ng-controller="sidebar" ng-class="(nightmode.active ? 'night':'')">
+
+	<div id="sidebarContainer" class="box">
+		
+		<div id="cover" ng-show="showCover">
+			<span class="close" ng-click="showCover = !showCover">x</span>
+			<p>Maak de sidebar breder om alles goed te zien</p>
+			<img src="img/width.gif" alt="" />
+		</div>
+
+		<div id="top">
+			<div id="top-menu">
+				<div id="top-menu-bar">
+					<span class="title">Marktplaats Anti Spam</span>
+
+					<div id="nav-icon1" ng-class="(menu.open ? 'open' : '')" ng-click="menu.open = !menu.open;stats.active = false;" title="Menu">
+					  <span></span>
+					  <span></span>
+					  <span></span>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="header" ng-init="menu.open = false; stats.active = false;">
+
+				<ul class="hamburger-menu" ng-if="menu.open">
+
+<!-- 				    <li title="Statistieken" ng-click="stats($event)" ng-class="(stats.active ? 'active':'')">
+				    	<a href="#">
+				    		<img ng-if="!nightmode.active"  src="img/stats.svg" />
+				    		<img ng-if="nightmode.active"  src="img/stats-light.svg" />
+				    		<span>Statistieken</span>
+				    	</a>
+				    </li>
+ -->
+				    <li ng-attr-title="{{(nightmode.active ? 'Nachtstand uitschakelen' : 'Nachtstand inschakelen')}}" ng-click="$event.preventDefault();nightmode.active = !nightmode.active" ng-class="(nightmode.active ? 'active':'')">
+				    	<a href="#">
+				    		<img ng-if="!nightmode.active" src="img/night.svg" />
+				    		<img ng-if="nightmode.active" src="img/night-light.svg" />
+				    		<span>Nachtstand</span>
+				    	</a>
+				    </li>
+				    <li title="Beoordeel add-on">
+				    	<a href="https://addons.mozilla.org/en-US/firefox/addon/marktplaats-anti-spam/reviews/add" target="_blank">
+				    		<img ng-if="!nightmode.active" src="img/heart.svg" />
+				    		<img ng-if="nightmode.active" src="img/heart-light.svg" />
+				    		<span>Beoordelen</span>
+				    	</a>
+				    </li>
+				    <li title="Bugmelding">
+				    	<a href="mailto:boblikestosk8@gmail.com?subject=BUGMELDING:%20Marktplaats%20Anti%20Spam">
+					    	<img ng-if="!nightmode.active" src="img/bug.svg" />
+					    	<img ng-if="nightmode.active" src="img/bug-light.svg" />
+					    	<span>Bugmelding</span>
+					    </a>
+				    </li>
+				    <li title="Reset" ng-click="reset($event)">
+				    	<a href="#">
+				    		<img ng-if="!nightmode.active" src="img/trash.svg" />
+				    		<img ng-if="nightmode.active" src="img/trash-light.svg" />
+				    		<span>Reset</span>
+				    	</a>
+				    </li>
+				    <li title="" ng-click="$event.preventDefault(); menu.open = !menu.open">
+				    	<a href="#">
+				    		<img ng-if="!nightmode.active" src="img/reset.svg" />
+				    		<img ng-if="nightmode.active" src="img/reset-light.svg" />
+				    		<span>Terug</span>
+				    	</a>
+				    </li>
+				    <!-- <li><a href="#"><img src="img/info.svg" /><span>Info</span></a></li> -->
+				</ul>
+
+				<ul id="preferences" ng-show="showPreferences"  ng-if="!menu.open">
+					<li ng-class="(preferences.links ? 'active':'')" ng-click="preferences.links = !preferences.links"><span>Advertenties met links</span></li>
+					<li ng-class="(preferences.daily ? 'active':'')" ng-click="preferences.daily = !preferences.daily"><span>Dagtoppers</span></li>
+					<li ng-class="(preferences.top ? 'active':'')" ng-click="preferences.top = !preferences.top"><span>Topadvertenties</span></li>
+					<li ng-class="(preferences.admart ? 'active':'')" ng-click="preferences.admart = !preferences.admart"><span>Admart advertenties</span></li>
+					<li ng-class="(preferences.extra ? 'active':'')" ng-click="preferences.extra = !preferences.extra"><span>Marktplaats Extra</span></li>
+					<li ng-class="(preferences.services ? 'active':'')" ng-click="preferences.services = !preferences.services"><span>Diensten</span></li>
+					<li ng-class="(preferences.spammers ? 'active':'')" ng-click="preferences.spammers = !preferences.spammers"><span>Spammers ({{spammers.spammers.length}})</span></li>
+				</ul>  
+
+				
+<!--                 <pre>{{preferences | json}}</pre>
+				<pre>{{spammers | json}}</pre> -->
+			</div>
+
+			<h2 class="title">
+				<span class="heading">
+					Spammers [<span id="spamCount">{{spammers.spammers.length}}</span>]
+				</span>
+				
+				<span class="sort">
+					<a href="#" id="sortDate" title="Sorteer op datum" ng-click="$event.preventDefault(); spammers.sort = 'date'; spammers.reverse = !spammers.reverse">
+						<span class="up" ng-if="spammers.sort == 'date' && !spammers.reverse"></span>
+						<span class="down" ng-if="spammers.sort == 'date' && spammers.reverse"></span>
+					</a>
+					<a href="#" id="sortName" title="Sorteer op naam"  ng-click="$event.preventDefault(); spammers.sort = 'name'; spammers.reverse = !spammers.reverse">
+						<span class="up" ng-if="spammers.sort == 'name' && !spammers.reverse"></span>
+						<span class="down" ng-if="spammers.sort == 'name' && spammers.reverse"></span>
+					</a>
+					<a href="#" id="searchBtn" title="Zoek naar spammer" ng-click="search($event)">
+						<span class="down" ng-if="showSearch"></span>
+					</a>
+				</span>
+			</h2>
+
+			<div id="spammer-search" ng-show="showSearch">
+				<input id="spammer-search-input" ng-model="spammers.search" placeholder="zoekterm"></label>
+			</div>
+		</div>
+
+		<ul id="spamList">
+			<li ng-repeat="spammer in spammers.spammers | filter:spammers.search | orderBy: spammers.sort : spammers.reverse track by spammer.id" data-added="{{spammer.date}}" data-name="{{spammer.name}}">
+				<span class="count">{{$index + 1}}</span>
+				<div class="titleHolder">
+					<span class="title">{{spammer.name | stripDomain}}</span>
+					<span class="subTitle">Toegevoegd op {{spammer.date * 1000 | date:'dd MMM yyyy @ HH:mm'}}</span>
+				</div>
+				<span class="remove"><a href="#" ng-click="removeSpammer($event,spammer)"></a></span>
+			</li>
+			<li class="nofound" ng-if="spammers.search != '' && (spammers.spammers|filter:spammers.search).length == 0">
+				<span>Geen spammer gevonden met zoekterm <strong>{{spammers.search}}</strong></span>
+			</li>
+			<li ng-if="spammers.search == '' && spammers.spammers.length == 0" class="nofound">
+				Voeg spammers toe
+				<img ng-if="!nightmode.active" src="img/megaphone.svg" class="no-spammers" alt="">
+				<img ng-if="nightmode.active" src="img/megaphone-light.svg" class="no-spammers" alt="">
+			</li>
+		</ul>
+
+		<div class="counter-container">
+			<strong>{{spamcount.count | number}}</strong> advertenties verstopt
+		</div>
+
+	</div>
+</body>
+
+</html>

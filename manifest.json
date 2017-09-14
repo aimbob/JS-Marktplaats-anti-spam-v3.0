@@ -1,0 +1,41 @@
+{
+    "manifest_version": 2,
+    "name": "MPAAS",
+    "version": "3.1",
+    "permissions": [
+        "<all_urls>",
+        "blocking",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "contextMenus"
+    ],
+    "background": {
+        "scripts": [
+            "js/config.js",
+            "js/controllers/BackgroundController.js",
+            "js/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": ["*://*.marktplaats.nl/*"],
+            "js": [
+                "js/config.js",
+                "js/resources/jquery-3.2.1.min.js",
+                "js/controllers/ContentController.js",
+                "js/content.js"
+            ]
+        }
+    ],
+    "sidebar_action": {
+        "default_icon": {
+            "16": "img/icon-16.png",
+            "36": "img/icon-32.png",
+            "64": "img/icon-64.png"
+        },
+        "default_title": "Marktplaats Anti Spam",
+        "default_panel": "sidebar.html"
+    }
+}
