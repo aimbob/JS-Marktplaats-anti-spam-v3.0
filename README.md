@@ -2,7 +2,7 @@
 
 With this Firefox WebExtensions add-on users can hide commercial product offered by companies on a second hand site [marktplaats.nl](marktplaats.nl)
 
-![preview addon](http://bobvanham.nl/public/git/mpaas.png)
+![preview addon](http://bobvanham.nl/public/git/mpas.png)
 
 ## Getting Started
 
