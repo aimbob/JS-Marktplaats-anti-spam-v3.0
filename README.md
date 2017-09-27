@@ -12,6 +12,7 @@ With this Firefox WebExtensions add-on, users can hide commercial products offer
 * Removes adds with paid top position
 * Removes adds with paid website link
 * Removes paid adds from Marktplaats own add platform
+* Nightmode for a darker UI skin
 
 
 
